@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>OnlineFood</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- 会话时间设置 -->
+	<session-config>
+		<session-timeout>2</session-timeout>
+	</session-config>
+
+	<!-- 项目字符编码过滤器 -->
+	<filter>
+		<filter-name>orderingfilter</filter-name>
+		<filter-class>cn.ordering.filter.OrderingFilter</filter-class>
+		<init-param>
+			<param-name>request</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>response</param-name>
+			<param-value>text/html;charset=utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>orderingfilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 用户登录过滤器 -->
+	<filter>
+		<filter-name>UserFilter</filter-name>
+		<filter-class>cn.ordering.filter.UserFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<servlet-name>Order</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<servlet-name>Shopcart</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/pages/login/userInfo.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/pages/shoppingcar/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 主页过滤器 -->
+	<!-- <filter>
+		<filter-name>maindexfilter</filter-name>
+		<filter-class>cn.ordering.filter.MyindexFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>maindexfilter</filter-name>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping> -->
+
+	<!-- 会话监听器 -->
+	<listener>
+		<listener-class>cn.ordering.linster.MySession</listener-class>
+	</listener>
+
+	<!-- 分页servlet -->
+	<servlet>
+	<servlet-name>pageservlet</servlet-name>
+	<servlet-class>cn.ordering.proscenium.servlet.PageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>pageservlet</servlet-name>
+	<url-pattern>/pageservlet</url-pattern>
+	</servlet-mapping>
+	<!-- 用户servlet -->
+	<servlet>
+		<servlet-name>userservlet</servlet-name>
+		<servlet-class>cn.ordering.login.servlet.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userservlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+	<!-- 购物车servlet -->
+	<servlet>
+		<servlet-name>Shopcart</servlet-name>
+		<servlet-class>cn.ordering.shopcart.servlet.ShopCartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Shopcart</servlet-name>
+		<url-pattern>/Shopcart</url-pattern>
+	</servlet-mapping>
+
+	<!-- 订单servlet -->
+	<servlet>
+		<servlet-name>Order</servlet-name>
+		<servlet-class>cn.ordering.order.servlet.OrderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Order</servlet-name>
+		<url-pattern>/Order</url-pattern>
+	</servlet-mapping>
+
+	<!-- 单品servlet -->
+	<servlet>
+		<servlet-name>Item</servlet-name>
+		<servlet-class>cn.ordering.proscenium.servlet.ItemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Item</servlet-name>
+		<url-pattern>/Item</url-pattern>
+	</servlet-mapping>
+</web-app>
